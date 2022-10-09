@@ -1,0 +1,20 @@
+.loginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  .loginBox {
+    padding: 35px 50px 50px 20px;
+    gap: 50px;
+
+    strong {
+      font-size: 30px;
+    }
+  }
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}

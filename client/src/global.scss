@@ -1,0 +1,31 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Circular", Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: #000000;
+  color: white;
+  line-height: 1.6;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background: #121212;
+  border-radius: 10px;
+}
+
+button {
+  cursor: pointer;
+  background: #1fdf64;
+  color: black;
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  font-size: medium;
+  font-weight: bold;
+}

@@ -1,0 +1,36 @@
+.homePage {
+  display: flex;
+  justify-content: center;
+
+  .formBox {
+    margin-top: 100px;
+    padding: 35px 50px 50px 20px;
+    gap: 30px;
+
+    .form {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      font-size: large;
+      gap: 25px;
+
+      input {
+        width: 400px;
+        padding: 12px 24px;
+        color: white;
+        border-radius: 20px;
+        font-size: large;
+        border: none;
+        background-color: #2a2a2a;
+
+        &::placeholder {
+          opacity: 0.2;
+        }
+
+        &:hover &:active {
+          background-color: #3d3b3b;
+        }
+      }
+    }
+  }
+}

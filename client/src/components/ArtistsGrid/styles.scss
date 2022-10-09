@@ -1,0 +1,19 @@
+.artistGrid {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #252525;
+  min-height: 80px;
+  padding: 15px;
+  max-width: 770px;
+  gap: 15px;
+
+  .buttonGrid {
+    background-color: white;
+    padding: 10px 10px 20px 20px;
+    width: fit-content;
+  }
+
+  svg {
+    margin-left: 10px;
+  }
+}
