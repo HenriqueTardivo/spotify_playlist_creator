@@ -24,6 +24,6 @@ app.use(
 
 app.use(router);
 
-app.listen(3350, () => {
+app.listen(process.env.APP_PORT, () => {
   console.log("🚀 Server started at port 3350");
 });
