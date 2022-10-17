@@ -37,7 +37,7 @@ export class FindTracks implements IFindTracks {
         .map((track) => `spotify:track:${track.id}`);
     });
 
-    const tracks = (await Promise.all(tracksPromise)).filter(Boolean).flat();
+    const tracks = (await Promise.all(tracksPromise)).flat().filter(Boolean);
 
     return tracks;
   }
