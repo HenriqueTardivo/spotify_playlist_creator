@@ -1,0 +1,27 @@
+.playlistPage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    .sucesso{
+        align-items: center;
+        justify-content: center;
+        height: 300px;
+        width:  350px;
+        background-color: white;
+        gap: 20px;
+
+        svg{
+            color: black;
+        }
+    
+        strong{
+            font-size: large;
+            font-weight: bold;
+            color: black;
+    
+        }
+    }
+}
+

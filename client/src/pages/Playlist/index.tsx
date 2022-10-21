@@ -1,5 +1,9 @@
+import { Check, CircleNotch } from "phosphor-react";
 import { useEffect, useState } from "react";
-import { Loading } from "../../components/Loading";
+import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { api } from "../../service/api";
+import "./styles.scss";
 
 export interface RequestData {
   artists: string[];
@@ -21,13 +25,37 @@ export const isValidRequest = (data: any): data is RequestData => {
 };
 
 export function Playlist() {
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
-  useEffect(() => {});
+  const [isLoading, setIsLoading] = useState(false);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // useEffect(() => {
+  //   const requestData = localStorage.getItem("requestData");
 
-  return; //TODO tela de sucesso playlist criada;
+  //   const makeRequest = async () => {
+  //     await api
+  //       .post("generate-playlist", requestData)
+  //       .then(() => setIsLoading(false));
+  //   };
+
+  //   makeRequest();
+  // });
+
+  return (
+    <div className="playlistPage">
+      {isLoading ? (
+        <div className="container sucesso ">
+          <ClipLoader color="black" size={32} />
+          <strong>A playlist está sendo criada</strong>
+        </div>
+      ) : (
+        <div className="container sucesso">
+          <Check size={32} />
+          <strong>Playlist criada com sucesso!</strong>
+
+          <button onClick={() => navigate("home")}>Voltar</button>
+        </div>
+      )}
+    </div>
+  );
 }
