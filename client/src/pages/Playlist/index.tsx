@@ -1,45 +1,26 @@
-import { Check, CircleNotch } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { Check } from "phosphor-react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { PlaylistContext } from "../../contexts/playlist-context";
 import { api } from "../../service/api";
 import "./styles.scss";
-
-export interface RequestData {
-  artists: string[];
-  songsQty: number;
-  playlist_id: string;
-  OAuthToken: string;
-}
-
-export const isValidRequest = (data: any): data is RequestData => {
-  if (
-    data.artists &&
-    data.artists.length > 0 &&
-    data.songsQty &&
-    data.playlist_id &&
-    data.OAuthToken
-  )
-    return true;
-  return false;
-};
 
 export function Playlist() {
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false),
+    { requestData } = useContext(PlaylistContext);
 
-  // useEffect(() => {
-  //   const requestData = localStorage.getItem("requestData");
+  useEffect(() => {
+    const makeRequest = async () => {
+      await api
+        .post("generate-playlist", requestData)
+        .then(() => setIsLoading(false));
+    };
 
-  //   const makeRequest = async () => {
-  //     await api
-  //       .post("generate-playlist", requestData)
-  //       .then(() => setIsLoading(false));
-  //   };
-
-  //   makeRequest();
-  // });
+    makeRequest();
+  });
 
   return (
     <div className="playlistPage">
@@ -52,7 +33,6 @@ export function Playlist() {
         <div className="container sucesso">
           <Check size={32} />
           <strong>Playlist criada com sucesso!</strong>
-
           <button onClick={() => navigate("home")}>Voltar</button>
         </div>
       )}

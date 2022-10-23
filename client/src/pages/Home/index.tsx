@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { ArtistsGrid } from "../../components/ArtistsGrid/ArtistsGrid";
-import { isValidRequest, Playlist, RequestData } from "../Playlist";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArtistsGrid } from "../../components/ArtistsGrid";
+import { PlaylistContext } from "../../contexts/playlist-context";
 
 import "./styles.scss";
 
@@ -12,7 +12,8 @@ export function Home() {
     [authToken, setAuthToken] = useState<string | undefined>(undefined),
     artistInput = useRef<HTMLInputElement>(null),
     songsQtyInput = useRef<HTMLInputElement>(null),
-    playlistInput = useRef<HTMLInputElement>(null);
+    playlistInput = useRef<HTMLInputElement>(null),
+    { setRequestData, isValidRequest } = useContext(PlaylistContext);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -33,7 +34,7 @@ export function Home() {
     };
 
     if (isValidRequest(requestData)) {
-      localStorage.setItem("requestData", JSON.stringify(requestData));
+      setRequestData(requestData);
       return navigate("/playlist");
     }
 
