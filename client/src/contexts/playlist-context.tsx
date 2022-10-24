@@ -1,10 +1,11 @@
 import { createContext, ReactNode, useState } from "react";
 
 export interface RequestData {
-  artists: string[];
-  songsQty: number;
-  playlist_id: string;
+  artists?: string[];
+  songsQty?: number;
+  playlist_id?: string;
   OAuthToken: string;
+  expires_in: number;
 }
 
 interface Provider {

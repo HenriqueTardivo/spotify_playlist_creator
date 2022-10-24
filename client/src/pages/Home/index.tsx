@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArtistsGrid } from "../../components/ArtistsGrid";
-import { PlaylistContext } from "../../contexts/playlist-context";
+import { PlaylistContext, RequestData } from "../../contexts/playlist-context";
 
 import "./styles.scss";
 
@@ -9,36 +9,25 @@ export function Home() {
   const navigate = useNavigate();
 
   const [artists, setArtists] = useState<string[]>([]),
-    [authToken, setAuthToken] = useState<string | undefined>(undefined),
     artistInput = useRef<HTMLInputElement>(null),
     songsQtyInput = useRef<HTMLInputElement>(null),
     playlistInput = useRef<HTMLInputElement>(null),
-    { setRequestData, isValidRequest } = useContext(PlaylistContext);
-
-  useEffect(() => {
-    const hash = window.location.hash;
-
-    const access_token = hash.split("&")[0].split("=")[1];
-
-    if (!access_token) navigate("/login");
-
-    setAuthToken(access_token);
-  });
+    { requestData, setRequestData, isValidRequest } =
+      useContext(PlaylistContext);
 
   function generatePlaylist() {
-    const requestData = {
+    const request = {
       artists,
       songsQty: artistInput.current?.value,
       playlist_id: playlistInput.current?.value,
-      OAuthToken: authToken,
+      OAuthToken: requestData.OAuthToken,
+      expires_in: requestData.expires_in,
     };
 
-    if (isValidRequest(requestData)) {
-      setRequestData(requestData);
+    if (isValidRequest(request)) {
+      setRequestData(request);
       return navigate("/playlist");
     }
-
-    // TODO toast de erro, parametros faltando
   }
 
   function handleAddArtist() {
