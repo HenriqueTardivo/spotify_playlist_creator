@@ -1,26 +1,13 @@
 import { Check } from "phosphor-react";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { PlaylistContext } from "../../contexts/playlist-context";
-import { api } from "../../service/api";
 import "./styles.scss";
 
 export function Playlist() {
-  const navigate = useNavigate();
-
-  const [isLoading, setIsLoading] = useState(false),
-    { requestData } = useContext(PlaylistContext);
-
-  useEffect(() => {
-    const makeRequest = async () => {
-      await api
-        .post("generate-playlist", requestData)
-        .then(() => setIsLoading(false));
-    };
-
-    makeRequest();
-  });
+  const navigate = useNavigate(),
+    { isLoading } = useContext(PlaylistContext);
 
   return (
     <div className="playlistPage">

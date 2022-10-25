@@ -4,7 +4,7 @@ import { PlaylistContext } from "../../contexts/playlist-context";
 
 export function Redirect() {
   const navigate = useNavigate(),
-    { setRequestData } = useContext(PlaylistContext);
+    { setAuth } = useContext(PlaylistContext);
 
   useEffect(() => {
     const hash = window.location.hash,
@@ -15,14 +15,12 @@ export function Redirect() {
       };
 
     if (oauthToken.access_token && oauthToken.expires_in) {
-      setRequestData({
-        OAuthToken: oauthToken.access_token,
-        expires_in: Number(oauthToken.expires_in),
+      setAuth({
+        OAuthToken: oauthToken.access_token.split("=")[1],
+        expires_in: Number(oauthToken.expires_in.split("=")[1]),
       });
-      return navigate("/home");
+      navigate("/home");
     }
-
-    return navigate("/login");
   });
 
   return <h1>Redirencionando...</h1>;

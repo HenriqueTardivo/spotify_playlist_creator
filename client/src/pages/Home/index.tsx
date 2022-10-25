@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { ArtistsGrid } from "../../components/ArtistsGrid";
 import { PlaylistContext, RequestData } from "../../contexts/playlist-context";
 
@@ -12,20 +12,21 @@ export function Home() {
     artistInput = useRef<HTMLInputElement>(null),
     songsQtyInput = useRef<HTMLInputElement>(null),
     playlistInput = useRef<HTMLInputElement>(null),
-    { requestData, setRequestData, isValidRequest } =
-      useContext(PlaylistContext);
+    { auth, isValidRequest, createPlaylist } = useContext(PlaylistContext);
 
   function generatePlaylist() {
+    if (!auth.OAuthToken) return redirect("/login");
+
     const request = {
       artists,
-      songsQty: artistInput.current?.value,
+      songsQty: songsQtyInput.current?.value,
       playlist_id: playlistInput.current?.value,
-      OAuthToken: requestData.OAuthToken,
-      expires_in: requestData.expires_in,
+      OAuthToken: auth.OAuthToken,
+      expires_in: auth.expires_in,
     };
 
     if (isValidRequest(request)) {
-      setRequestData(request);
+      createPlaylist(request);
       return navigate("/playlist");
     }
   }
