@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 import { ArtistsGrid } from "../../components/ArtistsGrid";
-import { PlaylistContext, RequestData } from "../../contexts/playlist-context";
+import { PlaylistContext } from "../../contexts/playlist-context";
 
 import "./styles.scss";
 
@@ -43,6 +43,10 @@ export function Home() {
     }
   }
 
+  useEffect(() => {
+    !auth.hasOwnProperty("OAuthToken") && navigate("/login");
+  });
+
   return (
     <div className="homePage">
       <div className="container formBox">
@@ -73,6 +77,9 @@ export function Home() {
             name="artist"
             ref={artistInput}
             placeholder={"The Beatles"}
+            onKeyDown={(key) => {
+              if (key.key === "enter") handleAddArtist;
+            }}
           />
         </div>
 

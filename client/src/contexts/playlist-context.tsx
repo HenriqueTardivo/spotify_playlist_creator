@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../service/api";
 
 export interface RequestData extends IAuth {
@@ -34,13 +28,13 @@ export const PlaylistContext = createContext<Provider>({} as Provider);
 
 export default function PlaylistProvider({ children }: ProviderProps) {
   const [auth, setAuth] = useState<IAuth>(
-    JSON.parse(localStorage.getItem("auth") || "{}") as IAuth
+    JSON.parse(sessionStorage.getItem("auth") || "{}") as IAuth
   );
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    localStorage.setItem("auth", JSON.stringify(auth));
+    sessionStorage.setItem("auth", JSON.stringify(auth));
   }, [auth]);
 
   const isValidRequest = (data: any): data is RequestData => {
@@ -58,9 +52,14 @@ export default function PlaylistProvider({ children }: ProviderProps) {
 
   async function createPlaylist(requestData: RequestData) {
     setIsLoading(true);
-    await api
-      .post("generate-playlist", requestData)
-      .then(() => setIsLoading(false));
+
+    if (requestData.playlist_id.includes("https")) {
+      requestData.playlist_id = requestData.playlist_id
+        .replace("https://open.spotify.com/playlist/", "")
+        .split("?")[0];
+    }
+
+    api.post("generate-playlist", requestData).then(() => setIsLoading(false));
   }
 
   return (

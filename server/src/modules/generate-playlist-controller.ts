@@ -39,6 +39,8 @@ export class GeneratePlaylistController {
         .status(200)
         .json({ message: "Musicas adicionadas na playlist com sucesso" });
     } catch (error: any) {
+      console.log(error?.response);
+
       return response.status(401).json({
         message: "Erro ao criar playlist ",
         error: error?.response?.data ?? "unknow error",

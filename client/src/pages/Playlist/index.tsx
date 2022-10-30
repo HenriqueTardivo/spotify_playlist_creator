@@ -20,7 +20,7 @@ export function Playlist() {
         <div className="container sucesso">
           <Check size={32} />
           <strong>Playlist criada com sucesso!</strong>
-          <button onClick={() => navigate("home")}>Voltar</button>
+          <button onClick={() => navigate("/home")}>Voltar</button>
         </div>
       )}
     </div>

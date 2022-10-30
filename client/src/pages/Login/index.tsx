@@ -6,7 +6,7 @@ export function Login() {
     "?response_type=token",
     "&client_id=" + import.meta.env.VITE_CLIENT_ID,
     "&redirect_uri=" + import.meta.env.VITE_REDIRECT_URL,
-    "&scope",
+    "&scope=",
     ["playlist-modify-public", "playlist-modify-private"].join("%20"),
     "&response_type=token&show_dialog=true",
   ].join("");
